@@ -1,0 +1,20 @@
+@extends('layouts.kadai')
+@section('pageTitle', 'kadai04_3')
+@section('title', 'お問い合わせ完了画⾯')
+@section('content')
+    <section>
+        <h3 class="text-xl border-b-2 border-sky-400 pb-2 mb-10">お問い合わせ完了</h3>
+        <div class="flex justify-between flex-col lg:flex-row items-stretch mb-5">
+
+            問い合わせ完了しました。
+
+
+        </div>
+        <div class="flex justify-end">
+            <a href="{{ route('kadai04.clear') }}" class="text-white text-center leading-10 bg-gray-600 px-10 hover:bg-pink-500 rounded-md">完了</a>
+        </div>
+
+    </section>
+
+
+@endsection
