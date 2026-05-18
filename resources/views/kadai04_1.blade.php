@@ -64,7 +64,7 @@
                     <!-- ▼▼内容▼▼ -->
                     <div class="flex flex-col items-stretch flex-grow">
                         <label class="text-gray-400 text-sm">内容<em class="text-xs text-pink-600">※</em></label>
-                        <textarea name="note" class="w-full h-40 lg:h-full text-lg px-2 py-2 border-2 border-gray-200 rounded-md">{{ old('note') ?? session('note') }}</textarea>
+                        <textarea name="note" class="w-full h-40 lg:h-full text-lg px-2 py-2 border-2 border-gray-200 rounded-md whitespace-pre-wrap break-words">{{ old('note') ?? session('note') }}</textarea>
                         @error('note')
                             <p class="text-sm text-pink-600 mt-1">{{ $message }}</p>
                         @enderror

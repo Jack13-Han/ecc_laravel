@@ -23,6 +23,7 @@ class Kadai04Controller extends Controller
 
         return view('kadai04_2',compact('inputs'))->with('success', 'お問い合わせが送信されました。');
     }
+    
 
     public function confirm(Kadai04Request $request){
         if($request->has('back')){
