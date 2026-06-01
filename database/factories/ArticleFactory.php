@@ -20,7 +20,7 @@ class ArticleFactory extends Factory
             'title' => $this->faker->realText(20),
             'body' => $this->faker->realText(200),
             'created_at' => $this->faker->dateTime('now'),
-            'deleted_at' => $this->faker->dateTime('now'),
+            'deleted_at' => null,
         ];
     }
 }

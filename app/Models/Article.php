@@ -11,7 +11,7 @@ class Article extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'articles';
+    // protected $table = 'articles';
 
     // protected $dates = ['deleted_at'];
 }

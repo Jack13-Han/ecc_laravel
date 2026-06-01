@@ -16,6 +16,9 @@ use App\Http\Controllers\Kadai03Controller;
 use App\Http\Controllers\Kadai04Controller;
 
 
+use App\Http\Controllers\SampleController;
+
+use App\Http\Controllers\ArticlesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,3 +79,8 @@ Route::post('/kadai04', [Kadai04Controller::class, 'post'])->name('kadai04.post'
 
 
 Route::get('/kadai04/clear', [Kadai04Controller::class, 'clear'])->name('kadai04.clear');
+
+
+Route::resource('sample06', SampleController::class);
+
+Route::resource('articles', ArticlesController::class);

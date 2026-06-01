@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('img_path',255)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->timestamp('deleted_at');
+            $table->softDeletes();
         });
     }
 
