@@ -72,7 +72,7 @@ class ArticlesController extends Controller
     public function edit(string $id)
     {
             $article_data = Article::find($id);
-            return view('articleEdit', compact('article_data'));
+            return view('articleEditing', compact('article_data'));
     }
 
     /**
@@ -80,7 +80,29 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+            'img_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $request->session()->regenerateToken();
+
+        $request_data = Article::findOrFail($id);
+
+        $request_data->title = $request->title;
+        $request_data->body = $request->body;
+
+        if ($request->hasFile('img_path')) {
+            $file_name = $request->file('img_path')->getClientOriginalName();
+            $request->file('img_path')->storeAs('public/images', $file_name);
+            $request_data->img_path = 'storage/images/' . $file_name;
+        }
+
+        DB::transaction(function () use ($request_data) {
+            $request_data->save();
+        });
+
+        return redirect()->route('articles.show', $id)->with('success', 'Article updated successfully.');
     }
 
     /**

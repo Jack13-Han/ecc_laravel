@@ -16,7 +16,9 @@
                         <img src="{{ $article_data->img_path ?? 'https://via.placeholder.com/400x300'   }}" class="w-full mb-5">
                 </figure>
 
-                <p class="grow w-8/12 text-lg leading-loose px-3 py-5">{{ $article_data->content }}</p>
+                <p class="grow w-8/12 text-lg leading-loose px-3 py-5 whitespace-pre-wrap">
+                    {{ $article_data->body }}
+                </p>
             </div>
         </div>
         <div class="flex justify-end">
