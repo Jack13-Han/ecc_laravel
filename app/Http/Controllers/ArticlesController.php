@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArticlesController extends Controller
 {
@@ -21,7 +22,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        //
+        return view('articleRegistration');
     }
 
     /**
@@ -29,7 +30,31 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+
+        $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+            'img_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $request->session()->regenerateToken();
+
+        $request_data = new Article();
+
+        $request_data->title = $request->title;
+        $request_data->body = $request->body;
+
+        if ($request->hasFile('img_path')) {
+            $file_name = $request->file('img_path')->getClientOriginalName();
+            $request->file('img_path')->storeAs('public/images', $file_name);
+            $request_data->img_path = 'storage/images/' . $file_name;
+        }
+
+        DB::transaction(function () use ($request_data) {
+            $request_data->save();
+        });
+
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -37,7 +62,8 @@ class ArticlesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $article_data = Article::find($id);
+        return view('articleDetail', compact('article_data'));
     }
 
     /**
@@ -45,7 +71,8 @@ class ArticlesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+            $article_data = Article::find($id);
+            return view('articleEdit', compact('article_data'));
     }
 
     /**
@@ -61,6 +88,9 @@ class ArticlesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $article_data = Article::findOrFail($id);
+        $article_data->delete();
+
+        return redirect()->route('articles.index')->with('success', 'Article deleted successfully.');
     }
 }

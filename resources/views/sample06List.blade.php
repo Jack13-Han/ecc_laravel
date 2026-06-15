@@ -5,7 +5,7 @@
 
 
 @php
-    dd($list_data);
+    // dd($list_data);
 @endphp
 
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-10">

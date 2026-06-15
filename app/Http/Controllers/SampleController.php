@@ -38,7 +38,8 @@ class SampleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $sample_data = Sample::find($id);
+        return view('sample06Detail', compact('sample_data'));
     }
 
     /**
