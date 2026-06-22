@@ -13,7 +13,7 @@
 
                 <figure class="flex flex-col w-4/12">
                     <!—TODO:画像 -->
-                        <img src="{{ $article_data->img_path ?? 'https://via.placeholder.com/400x300'   }}" class="w-full mb-5">
+                        <img src="{{ asset($article_data->img_path) }}" class="w-full mb-5">
                 </figure>
 
                 <p class="grow w-8/12 text-lg leading-loose px-3 py-5 whitespace-pre-wrap">
@@ -26,6 +26,7 @@
                 class="block w-16 text-white text-center bg-gray-500 hover:bg-gray-400 mr-5 px-3 py-2 rounded-md">戻る</a>
 
             <form action="{{ route('articles.destroy', $article_data->id) }}" method="POST">
+                
                 @csrf
                 @method('DELETE')
 

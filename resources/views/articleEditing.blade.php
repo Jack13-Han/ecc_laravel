@@ -50,7 +50,8 @@
 
                     <div class="grow">
                         <label class="block text-gray-500 text-sm uppercase" for="body">body</label>
-                        <textarea name="body" class="w-full h-80 text-lg px-3 py-2 border border-gray-300 rounded-md resize-none">{{ old('body', $article_data->body) }}</textarea>
+                        <textarea name="body" class="w-full h-80 text-lg px-3 py-2 border border-gray-300 rounded-md resize-none">
+                            {{ old('body', $article_data->body) }}</textarea>
 
 
                         @error('body')
