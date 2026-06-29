@@ -19,6 +19,7 @@ use App\Http\Controllers\Kadai04Controller;
 use App\Http\Controllers\SampleController;
 
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\Sample11ApiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,3 +85,6 @@ Route::get('/kadai04/clear', [Kadai04Controller::class, 'clear'])->name('kadai04
 Route::resource('sample06', SampleController::class);
 
 Route::resource('articles', ArticlesController::class);
+
+
+// Route::apiResource("v1/samples", Sample11ApiController::class);

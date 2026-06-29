@@ -14,20 +14,6 @@ class SampleTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('samples')->insert([
-            // [
-            //     'title' => 'Global Education Awards',
-            //     'body' => '本文１'
-            // ],
-            // [
-            //     'title' => '地球祭が今年も開催！！',
-            //     'body' => '本文２'
-            // ],
-            // [
-            //     'title' => 'ハロウィン Day」でした。',
-            //     'body' => '本文３'
-            // ],
-            Sample::factory()->count(100)->create(),
-        ]);
+        Sample::factory()->count(100)->create();
     }
 }

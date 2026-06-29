@@ -14,8 +14,6 @@ class ArticleTableSeeder extends Seeder
      */
     public function run(): void
     {
-       DB::table('articles')->insert([
-            Article::factory()->count(100)->create(),
-        ]);
+        Article::factory()->count(100)->create();
     }
 }

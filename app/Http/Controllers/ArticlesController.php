@@ -14,6 +14,9 @@ class ArticlesController extends Controller
     public function index()
     {
         $articles_list = Article::paginate(6);
+
+
+        
         return view('articleList', compact('articles_list'));
     }
 
