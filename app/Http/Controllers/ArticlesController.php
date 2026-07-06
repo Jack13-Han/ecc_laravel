@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ArticlesController extends Controller
 {
@@ -16,7 +17,7 @@ class ArticlesController extends Controller
         $articles_list = Article::paginate(6);
 
 
-        
+
         return view('articleList', compact('articles_list'));
     }
 
@@ -49,8 +50,11 @@ class ArticlesController extends Controller
 
         if ($request->hasFile('img_path')) {
             $file_name = $request->file('img_path')->getClientOriginalName();
-            $request->file('img_path')->storeAs('public/images', $file_name);
-            $request_data->img_path = 'storage/images/' . $file_name;
+            $upload_dir = public_path('kadai_images');
+
+
+            $request->file('img_path')->move($upload_dir, $file_name);
+            $request_data->img_path = 'kadai_images/' . $file_name;
         }
 
         DB::transaction(function () use ($request_data) {
@@ -74,8 +78,8 @@ class ArticlesController extends Controller
      */
     public function edit(string $id)
     {
-            $article_data = Article::find($id);
-            return view('articleEditing', compact('article_data'));
+        $article_data = Article::find($id);
+        return view('articleEditing', compact('article_data'));
     }
 
     /**
@@ -97,8 +101,12 @@ class ArticlesController extends Controller
 
         if ($request->hasFile('img_path')) {
             $file_name = $request->file('img_path')->getClientOriginalName();
-            $request->file('img_path')->storeAs('public/images', $file_name);
-            $request_data->img_path = 'storage/images/' . $file_name;
+            $upload_dir = public_path('kadai_images');
+
+          
+
+            $request->file('img_path')->move($upload_dir, $file_name);
+            $request_data->img_path = 'kadai_images/' . $file_name;
         }
 
         DB::transaction(function () use ($request_data) {

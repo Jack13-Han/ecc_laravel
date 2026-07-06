@@ -16,7 +16,7 @@
                     <label class="block text-gray-500 text-sm uppercase" for="title">title</label>
                     <input type="text" name="title" id="title"
                         class="w-full text-2xl font-bold leading-10 border border-gray-300 rounded-md"
-                        value="{{old('title', $article_data->title) }}">
+                        value="{{ old('title', $article_data->title) }}">
 
                     @error('title')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -27,19 +27,37 @@
                 <div class="flex justify-between py-3">
                     <div class="w-4/12 mr-5">
                         <label class="block text-gray-500 text-sm uppercase" for="">image file</label>
-                        <!-- ▼▼画像がある場合▼▼ -->
+                        @php
+                            $imgValue = $article_data->img_path ?? '';
+                            $imagePath =
+                                $imgValue &&
+                                (str_starts_with($imgValue, 'http://') ||
+                                    str_starts_with($imgValue, 'https://') ||
+                                    str_starts_with($imgValue, '/'))
+                                    ? $imgValue
+                                    : ($imgValue
+                                        ? (str_starts_with($imgValue, 'storage/')
+                                            ? $imgValue
+                                            : 'kadai_images/' . ltrim($imgValue, '/'))
+                                        : '');
+                        @endphp
+
                         <figure class="flex flex-col">
-                            <!—TODO:画像 -->
-                                <img src="{{ $article_data->img_path ?? 'https://via.placeholder.com/400x300' }}"
-                                    class="w-full">
-
+                            @if ($imagePath)
+                                <img id="image-preview" src="{{ asset($imagePath) }}" alt="No image" class="w-full">
+                            @else
+                                <div id="image-preview"
+                                    class="w-full h-80 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center text-gray-400 text-sm">
+                                    No image
+                                </div>
+                            @endif
                         </figure>
-                        <!-- ▲▲画像がある場合▲▲ -->
 
-                        <!-- ▼▼画像がない場合▼▼ -->
                         <input type="file" name="img_path" id="image"
-                            class="w-full h-80 text-xs px-3 py-2 border border-gray-300 rounded-md"
-                            value="{{ $article_data->img_path ?? 'https://via.placeholder.com/400x300' }}">
+                            class="w-full h-80 text-xs px-3 py-2 border border-gray-300 rounded-md mt-3">
+
+                        {{-- <img src="{{ asset($imagePath) }}" alt="Preview" class="w-full mt-3" id="image-preview">
+                        <!-- ▼▼画像がない場合▼▼ --> --}}
 
                         @error('img_path')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -69,4 +87,41 @@
             </div>
         </form>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageInput = document.getElementById('image');
+            const preview = document.getElementById('image-preview');
+
+            if (!imageInput || !preview) {
+                return;
+            }
+
+            imageInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    if (preview.tagName === 'IMG') {
+                        preview.src = e.target.result;
+                        preview.alt = 'Preview';
+                    } else {
+                        const img = document.createElement('img');
+                        img.id = 'image-preview';
+                        img.src = e.target.result;
+                        img.alt = 'Preview';
+                        img.className = 'w-full';
+                        preview.replaceWith(img);
+                    }
+                };
+
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
 @endsection

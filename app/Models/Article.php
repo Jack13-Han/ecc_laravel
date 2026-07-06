@@ -14,4 +14,10 @@ class Article extends Model
     // protected $table = 'articles';
 
     // protected $dates = ['deleted_at'];
+    public static $rules = [
+        'image' => 'image',
+        // 'body' => 'required|string',
+    ];
+
+
 }
